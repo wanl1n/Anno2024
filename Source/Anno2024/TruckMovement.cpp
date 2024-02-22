@@ -83,7 +83,7 @@ void UTruckMovement::CheckMove(float deltaTime)
 	FVector currentPos = this->GetOwner()->GetActorLocation();
 	if (this->IsAtBuilding() != -1 && !this->done) {
 		if (!this->docked) {
-			this->loadingTime = FMath::RandRange(1, 3);
+			this->loadingTime = FMath::RandRange(this->minLoadingTime, this->maxLoadingTime);
 			this->ticks = 0;
 		}
 
@@ -173,13 +173,12 @@ void UTruckMovement::Recenter(float deltaTime)
 
 void UTruckMovement::MoveForward(float deltaTime)
 {
-
 	FVector currentPos = this->GetOwner()->GetActorLocation();
 	FVector truckForward = this->GetOwner()->GetActorForwardVector() * this->step;
 	truckForward += currentPos;
 
 	if (this->turn)
-		truckForward = FMath::Lerp(currentPos, truckForward, deltaTime * this->speed);
+		truckForward = FMath::Lerp(currentPos, truckForward, 0.4f);
 	else 
 		truckForward = FMath::Lerp(currentPos, truckForward, this->ticks/this->travelTime);
 

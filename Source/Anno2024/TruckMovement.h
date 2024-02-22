@@ -46,6 +46,8 @@ public:
 
 	UPROPERTY(EditAnywhere) TArray<int32> resourcesHeld;
 	UPROPERTY(EditAnywhere) int32 loadingTime = 1;
+	UPROPERTY(EditAnywhere) int32 minLoadingTime = 1;
+	UPROPERTY(EditAnywhere) int32 maxLoadingTime = 3;
 	UPROPERTY(EditAnywhere) int32 maxResources = 2;
 
 private:
