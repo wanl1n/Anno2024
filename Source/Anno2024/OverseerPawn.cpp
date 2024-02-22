@@ -84,59 +84,64 @@ void AOverseerPawn::Tick(float DeltaTime)
 
 void AOverseerPawn::UpdateText()
 {
-	if (buildings[0]) {
-		GameWidget->SetIronMineStockText(buildings[0]->FindComponentByClass<UProducer>()->produce);
-		GameWidget->SetIronMineProductionBar(buildings[0]->FindComponentByClass<UProducer>()->GetProductionProgress(),
-											buildings[0]->FindComponentByClass<UProducer>()->ticks,
-											buildings[0]->FindComponentByClass<UProducer>()->prodTime);
+	if (buildings.Num() > 0) {
+		if (buildings[0]) {
+			GameWidget->SetIronMineStockText(buildings[0]->FindComponentByClass<UProducer>()->produce);
+			GameWidget->SetIronMineProductionBar(buildings[0]->FindComponentByClass<UProducer>()->GetProductionProgress(),
+												buildings[0]->FindComponentByClass<UProducer>()->ticks,
+												buildings[0]->FindComponentByClass<UProducer>()->prodTime);
+		}
+		if (buildings[1]) {
+			GameWidget->SetCoalMineStockText(buildings[1]->FindComponentByClass<UProducer>()->produce);
+			GameWidget->SetCoalMineProductionBar(buildings[1]->FindComponentByClass<UProducer>()->GetProductionProgress(),
+												buildings[1]->FindComponentByClass<UProducer>()->ticks,
+												buildings[1]->FindComponentByClass<UProducer>()->prodTime);
+		}
+		if (buildings[2]) {
+			GameWidget->SetFurnaceStockText(buildings[2]->FindComponentByClass<UProducer>()->produce);
+			GameWidget->SetIronStorageText(buildings[2]->FindComponentByClass<UProducer>()->resources[0]);
+			GameWidget->SetCoalStorageText(buildings[2]->FindComponentByClass<UProducer>()->resources[1]);
+			GameWidget->SetFurnaceProductionBar(buildings[2]->FindComponentByClass<UProducer>()->GetProductionProgress(),
+												buildings[2]->FindComponentByClass<UProducer>()->ticks,
+												buildings[2]->FindComponentByClass<UProducer>()->prodTime);
+		}
+		if (buildings[3]) {
+			GameWidget->SetLumberHutStockText(buildings[3]->FindComponentByClass<UProducer>()->produce);
+			GameWidget->SetLumberHutProductionBar(buildings[3]->FindComponentByClass<UProducer>()->GetProductionProgress(),
+												buildings[3]->FindComponentByClass<UProducer>()->ticks,
+												buildings[3]->FindComponentByClass<UProducer>()->prodTime);
+		}
+		if (buildings[4]) {
+			GameWidget->SetSewingMachineStockText(buildings[4]->FindComponentByClass<UProducer>()->produce);
+			GameWidget->SetSteelStorageText(buildings[4]->FindComponentByClass<UProducer>()->resources[0]);
+			GameWidget->SetLumberStorageText(buildings[4]->FindComponentByClass<UProducer>()->resources[1]);
+			GameWidget->SetSewingMachineProductionBar(buildings[4]->FindComponentByClass<UProducer>()->GetProductionProgress(),
+													buildings[4]->FindComponentByClass<UProducer>()->ticks,
+													buildings[4]->FindComponentByClass<UProducer>()->prodTime);
+		}
 	}
-	if (buildings[1]) {
-		GameWidget->SetCoalMineStockText(buildings[1]->FindComponentByClass<UProducer>()->produce);
-		GameWidget->SetCoalMineProductionBar(buildings[1]->FindComponentByClass<UProducer>()->GetProductionProgress(),
-											buildings[1]->FindComponentByClass<UProducer>()->ticks,
-											buildings[1]->FindComponentByClass<UProducer>()->prodTime);
+	
+	if (trucks.Num()) {
+		if (trucks[0]) {
+			GameWidget->SetTruckAState(FName(*this->GetTruckState(0)));
+			GameWidget->SetTruckAIronCount(trucks[0]->FindComponentByClass<UTruckMovement>()->resourcesHeld[0]);
+			GameWidget->SetTruckACoalCount(trucks[0]->FindComponentByClass<UTruckMovement>()->resourcesHeld[1]);
+			GameWidget->SetTruckASteelCount(trucks[0]->FindComponentByClass<UTruckMovement>()->resourcesHeld[2]);
+			GameWidget->SetTruckALumberCount(trucks[0]->FindComponentByClass<UTruckMovement>()->resourcesHeld[3]);
+			GameWidget->SetTruckALoadingTime(trucks[0]->FindComponentByClass<UTruckMovement>()->loadingTime);
+			GameWidget->SetTruckAStorage(trucks[0]->FindComponentByClass<UTruckMovement>()->maxResources);
+		}
+		if (trucks[1]) {
+			GameWidget->SetTruckBState(FName(*this->GetTruckState(1)));
+			GameWidget->SetTruckBIronCount(trucks[1]->FindComponentByClass<UTruckMovement>()->resourcesHeld[0]);
+			GameWidget->SetTruckBCoalCount(trucks[1]->FindComponentByClass<UTruckMovement>()->resourcesHeld[1]);
+			GameWidget->SetTruckBSteelCount(trucks[1]->FindComponentByClass<UTruckMovement>()->resourcesHeld[2]);
+			GameWidget->SetTruckBLumberCount(trucks[1]->FindComponentByClass<UTruckMovement>()->resourcesHeld[3]);
+			GameWidget->SetTruckBLoadingTime(trucks[1]->FindComponentByClass<UTruckMovement>()->loadingTime);
+			GameWidget->SetTruckBStorage(trucks[1]->FindComponentByClass<UTruckMovement>()->maxResources);
+		}
 	}
-	if (buildings[2]) {
-		GameWidget->SetFurnaceStockText(buildings[2]->FindComponentByClass<UProducer>()->produce);
-		GameWidget->SetIronStorageText(buildings[2]->FindComponentByClass<UProducer>()->resources[0]);
-		GameWidget->SetCoalStorageText(buildings[2]->FindComponentByClass<UProducer>()->resources[1]);
-		GameWidget->SetFurnaceProductionBar(buildings[2]->FindComponentByClass<UProducer>()->GetProductionProgress(),
-											buildings[2]->FindComponentByClass<UProducer>()->ticks,
-											buildings[2]->FindComponentByClass<UProducer>()->prodTime);
-	}
-	if (buildings[3]) {
-		GameWidget->SetLumberHutStockText(buildings[3]->FindComponentByClass<UProducer>()->produce);
-		GameWidget->SetLumberHutProductionBar(buildings[3]->FindComponentByClass<UProducer>()->GetProductionProgress(),
-											buildings[3]->FindComponentByClass<UProducer>()->ticks,
-											buildings[3]->FindComponentByClass<UProducer>()->prodTime);
-	}
-	if (buildings[4]) {
-		GameWidget->SetSewingMachineStockText(buildings[4]->FindComponentByClass<UProducer>()->produce);
-		GameWidget->SetSteelStorageText(buildings[4]->FindComponentByClass<UProducer>()->resources[0]);
-		GameWidget->SetLumberStorageText(buildings[4]->FindComponentByClass<UProducer>()->resources[1]);
-		GameWidget->SetSewingMachineProductionBar(buildings[4]->FindComponentByClass<UProducer>()->GetProductionProgress(),
-												buildings[4]->FindComponentByClass<UProducer>()->ticks,
-												buildings[4]->FindComponentByClass<UProducer>()->prodTime);
-	}
-
-	if (trucks[0]) {
-		GameWidget->SetTruckAState(FName(*this->GetTruckState(0)));
-		GameWidget->SetTruckAIronCount(trucks[0]->FindComponentByClass<UTruckMovement>()->resourcesHeld[0]);
-		GameWidget->SetTruckACoalCount(trucks[0]->FindComponentByClass<UTruckMovement>()->resourcesHeld[1]);
-		GameWidget->SetTruckASteelCount(trucks[0]->FindComponentByClass<UTruckMovement>()->resourcesHeld[2]);
-		GameWidget->SetTruckALumberCount(trucks[0]->FindComponentByClass<UTruckMovement>()->resourcesHeld[3]);
-		GameWidget->SetTruckALoadingTime(trucks[0]->FindComponentByClass<UTruckMovement>()->loadingTime);
-		GameWidget->SetTruckAStorage(trucks[0]->FindComponentByClass<UTruckMovement>()->maxResources);
-	}
-	if (trucks[1]) {
-		GameWidget->SetTruckBState(FName(*this->GetTruckState(1)));
-		GameWidget->SetTruckBIronCount(trucks[1]->FindComponentByClass<UTruckMovement>()->resourcesHeld[0]);
-		GameWidget->SetTruckBCoalCount(trucks[1]->FindComponentByClass<UTruckMovement>()->resourcesHeld[1]);
-		GameWidget->SetTruckBSteelCount(trucks[1]->FindComponentByClass<UTruckMovement>()->resourcesHeld[2]);
-		GameWidget->SetTruckBLumberCount(trucks[1]->FindComponentByClass<UTruckMovement>()->resourcesHeld[3]);
-		GameWidget->SetTruckBLoadingTime(trucks[1]->FindComponentByClass<UTruckMovement>()->loadingTime);
-		GameWidget->SetTruckBStorage(trucks[1]->FindComponentByClass<UTruckMovement>()->maxResources);
-	}
+	
 }
 
 FString AOverseerPawn::GetTruckState(int index)

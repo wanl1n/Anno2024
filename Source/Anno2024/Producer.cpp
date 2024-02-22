@@ -61,7 +61,7 @@ void UProducer::Produce()
 
 	this->storage += 2;
 
-	if (type == 0) {
+	if (type == 0 || type == 2) {
 		this->resources[0]--;
 		this->resources[1]--;
 	}
